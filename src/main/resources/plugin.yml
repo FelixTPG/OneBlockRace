@@ -1,0 +1,11 @@
+name: OneBlockRace
+version: '1.0'
+main: eu.felixtpg.oneBlockRace.Main
+api-version: '1.21'
+load: STARTUP
+authors:
+  - FelixTPG
+  - FrinshHD
+
+commands:
+  start:
