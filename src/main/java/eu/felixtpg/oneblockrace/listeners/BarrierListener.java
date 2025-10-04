@@ -1,7 +1,7 @@
-package eu.felixtpg.oneBlockRace.listeners;
+package eu.felixtpg.oneblockrace.listeners;
 
-import eu.felixtpg.oneBlockRace.Main;
-import eu.felixtpg.oneBlockRace.environment.PlotManager;
+import eu.felixtpg.oneblockrace.Main;
+import eu.felixtpg.oneblockrace.environment.PlotManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -14,7 +14,10 @@ import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.scheduler.BukkitTask;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class BarrierListener implements Listener {
 

@@ -1,13 +1,14 @@
-package eu.felixtpg.oneBlockRace;
+package eu.felixtpg.oneblockrace;
 
-import eu.felixtpg.oneBlockRace.commands.StartCommand;
-import eu.felixtpg.oneBlockRace.environment.EventManager;
-import eu.felixtpg.oneBlockRace.environment.PlotManager;
-import eu.felixtpg.oneBlockRace.listeners.BarrierListener;
-import eu.felixtpg.oneBlockRace.listeners.ConnectionListener;
-import eu.felixtpg.oneBlockRace.listeners.EnvironmentListener;
-import eu.felixtpg.oneBlockRace.listeners.SpawnProtectionListener;
-import eu.felixtpg.oneBlockRace.worldCreation.VoidWorldGenerator;
+import eu.felixtpg.oneblockrace.commands.EventCommand;
+import eu.felixtpg.oneblockrace.environment.EventManager;
+import eu.felixtpg.oneblockrace.environment.GoalManager;
+import eu.felixtpg.oneblockrace.environment.PlotManager;
+import eu.felixtpg.oneblockrace.listeners.BarrierListener;
+import eu.felixtpg.oneblockrace.listeners.ConnectionListener;
+import eu.felixtpg.oneblockrace.listeners.EnvironmentListener;
+import eu.felixtpg.oneblockrace.listeners.SpawnProtectionListener;
+import eu.felixtpg.oneblockrace.worldgen.VoidWorldGenerator;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.GameRule;
@@ -24,6 +25,7 @@ public final class Main extends JavaPlugin {
 
     @Getter private static Main instance;
     @Getter private static PlotManager plotManager;
+    @Getter private static GoalManager goalManager;
 
     @Override
     public ChunkGenerator getDefaultWorldGenerator(String worldName, String id) {
@@ -46,6 +48,7 @@ public final class Main extends JavaPlugin {
         }
 
         plotManager = new PlotManager();
+        goalManager = new GoalManager();
         new EnvironmentListener();
         new ConnectionListener();
         new BarrierListener();
@@ -53,7 +56,7 @@ public final class Main extends JavaPlugin {
 
         new EventManager();
 
-        getCommand("start").setExecutor(new StartCommand());
+        getCommand("event").setExecutor(new EventCommand());
 
         Bukkit.getScheduler().scheduleSyncDelayedTask(this, () -> {
             setUpWorlds();

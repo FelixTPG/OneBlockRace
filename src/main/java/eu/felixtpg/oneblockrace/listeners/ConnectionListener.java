@@ -1,7 +1,7 @@
-package eu.felixtpg.oneBlockRace.listeners;
+package eu.felixtpg.oneblockrace.listeners;
 
-import eu.felixtpg.oneBlockRace.Main;
-import eu.felixtpg.oneBlockRace.scoreboard.ScoreboardManager;
+import eu.felixtpg.oneblockrace.Main;
+import eu.felixtpg.oneblockrace.scoreboard.ScoreboardManager;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

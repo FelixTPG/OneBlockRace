@@ -1,6 +1,6 @@
 name: OneBlockRace
 version: '1.0'
-main: eu.felixtpg.oneBlockRace.Main
+main: eu.felixtpg.oneblockrace.Main
 api-version: '1.21'
 load: STARTUP
 authors:
@@ -8,4 +8,4 @@ authors:
   - FrinshHD
 
 commands:
-  start:
+  event:

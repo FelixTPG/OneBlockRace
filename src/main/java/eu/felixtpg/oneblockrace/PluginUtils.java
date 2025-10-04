@@ -1,4 +1,4 @@
-package eu.felixtpg.oneBlockRace;
+package eu.felixtpg.oneblockrace;
 
 import org.bukkit.Material;
 

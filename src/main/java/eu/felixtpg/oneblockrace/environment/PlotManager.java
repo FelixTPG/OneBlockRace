@@ -1,8 +1,10 @@
-package eu.felixtpg.oneBlockRace.environment;
+package eu.felixtpg.oneblockrace.environment;
 
-import eu.felixtpg.oneBlockRace.Main;
+import eu.felixtpg.oneblockrace.Main;
 import lombok.Getter;
 import org.bukkit.*;
+import org.bukkit.block.Block;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -10,7 +12,10 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.UUID;
 
 public class PlotManager {
 
@@ -159,8 +164,13 @@ public class PlotManager {
     public void updateLeaderboard() {
         LinkedHashMap<UUID, Integer> tempLeaderboard = new LinkedHashMap<>();
 
+        ConfigurationSection plots = config.getConfigurationSection("plots");
+
+        // if the config section is null return
+        if (plots == null) return;
+
         // get list of all plots
-        List<String> plotList = config.getConfigurationSection("plots").getKeys(false).stream().toList();
+        List<String> plotList = plots.getKeys(false).stream().toList();
         plotList.forEach(plot -> {
             UUID playerId = UUID.fromString(plot);
             Location plotSpawn = Main.getPlotManager().getPlotSpawn(playerId);
@@ -170,7 +180,8 @@ public class PlotManager {
             int emptyBlocks = 0;
 
             while (emptyBlocks < 10) {
-                if (plotSpawn.clone().add(blockCount, 0, 0).getBlock().getType() == Material.AIR) {
+                Block block = plotSpawn.getWorld().getHighestBlockAt(plotSpawn.clone().add(blockCount, 0, 0));
+                if (block.getType() == Material.AIR || block.getType() == Material.CAVE_AIR || block.getType() == Material.VOID_AIR) {
                     emptyBlocks++;
                 } else {
                     blockCount++;
@@ -181,6 +192,51 @@ public class PlotManager {
             if (blockCount <= 0) return;
             tempLeaderboard.put(playerId, blockCount);
         });
+
+        // sort the leaderboard by block count
+        leaderboard = tempLeaderboard.entrySet().stream()
+                .sorted((e1, e2) -> e2.getValue().compareTo(e1.getValue()))
+                .collect(LinkedHashMap::new, (m, e) -> m.put(e.getKey(), e.getValue()), LinkedHashMap::putAll);
+    }
+
+    public void updateLeaderboard(Player player) {
+        LinkedHashMap<UUID, Integer> tempLeaderboard = new LinkedHashMap<>(leaderboard);
+
+        ConfigurationSection plots = config.getConfigurationSection("plots");
+
+        // if the config section is null return
+        if (plots == null) return;
+
+        // get list of all plots
+        List<String> plotList = plots.getKeys(false).stream().toList();
+        for (String plot : plotList) {
+            UUID playerId = UUID.fromString(plot);
+
+            if (!playerId.equals(player.getUniqueId())) continue;
+
+            Location plotSpawn = Main.getPlotManager().getPlotSpawn(playerId);
+
+            // count blocks to x coordinate of the plot until block is air
+            int blockCount = 0;
+            int emptyBlocks = 0;
+
+            while (emptyBlocks < 10) {
+                Block block = plotSpawn.getWorld().getHighestBlockAt(plotSpawn.clone().add(blockCount, 0, 0));
+                if (block.getType() == Material.AIR || block.getType() == Material.CAVE_AIR || block.getType() == Material.VOID_AIR) {
+                    emptyBlocks++;
+                } else {
+                    blockCount++;
+                }
+            }
+
+            blockCount--; // subtract the start block
+            if (blockCount <= 0) {
+                tempLeaderboard.remove(playerId);
+                break;
+            }
+            tempLeaderboard.put(playerId, blockCount);
+            break;
+        }
 
         // sort the leaderboard by block count
         leaderboard = tempLeaderboard.entrySet().stream()

@@ -1,4 +1,4 @@
-package eu.felixtpg.oneBlockRace.worldCreation;
+package eu.felixtpg.oneblockrace.worldgen;
 
 import org.bukkit.World;
 import org.bukkit.generator.ChunkGenerator;

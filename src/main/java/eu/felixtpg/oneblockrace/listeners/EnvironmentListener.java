@@ -1,9 +1,8 @@
-package eu.felixtpg.oneBlockRace.listeners;
+package eu.felixtpg.oneblockrace.listeners;
 
-import eu.felixtpg.oneBlockRace.Main;
+import eu.felixtpg.oneblockrace.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
-import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -49,6 +48,8 @@ public class EnvironmentListener implements Listener {
             player.sendMessage(Main.PREFIX + "§cDu darfst hier keine Blöcke platzieren!");
             event.setCancelled(true);
         }
+
+        Main.getPlotManager().updateLeaderboard(player);
     }
 
     @EventHandler
@@ -66,6 +67,8 @@ public class EnvironmentListener implements Listener {
             player.sendMessage(Main.PREFIX + "§cDu darfst hier keine Blöcke abbauen!");
             event.setCancelled(true);
         }
+
+        Main.getPlotManager().updateLeaderboard(player);
     }
 
     @EventHandler
@@ -81,8 +84,8 @@ public class EnvironmentListener implements Listener {
     @EventHandler
     public void onExplosion(ExplosionPrimeEvent event) {
         event.setCancelled(true);
-
     }
+
     @EventHandler
     public void onMove(PlayerMoveEvent event) {
         if (event.getPlayer().getGameMode().equals(GameMode.CREATIVE)) return;
@@ -99,8 +102,8 @@ public class EnvironmentListener implements Listener {
 
     @EventHandler
     public void onProjectile(ProjectileLaunchEvent event) {
-        if (event.getEntity().getShooter() instanceof Player)
-            event.getEntity().sendMessage(Main.PREFIX + "§cDu darfst keine Projektilen verwenden!");
+        if (event.getEntity().getShooter() instanceof Player player)
+            player.sendMessage(Main.PREFIX + "§cDu darfst keine Projektile verwenden!");
         event.setCancelled(true);
     }
 
