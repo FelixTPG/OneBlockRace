@@ -9,3 +9,15 @@ authors:
 
 commands:
   start:
+  event:
+    description: Event-Verwaltung
+    usage: /event <setup|start|stop>
+    permission: oneblockrace.event
+
+permissions:
+  oneblockrace.event:
+    description: Erlaubt die Verwendung des Event-Befehls
+    default: op
+  oneblockrace.start:
+    description: Erlaubt die Verwendung des Start-Befehls
+    default: op

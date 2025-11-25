@@ -1,5 +1,6 @@
 package eu.felixtpg.oneBlockRace;
 
+import eu.felixtpg.oneBlockRace.commands.EventCommand;
 import eu.felixtpg.oneBlockRace.commands.StartCommand;
 import eu.felixtpg.oneBlockRace.environment.EventManager;
 import eu.felixtpg.oneBlockRace.environment.PlotManager;
@@ -24,6 +25,7 @@ public final class Main extends JavaPlugin {
 
     @Getter private static Main instance;
     @Getter private static PlotManager plotManager;
+    @Getter private static EventManager eventManager;
 
     @Override
     public ChunkGenerator getDefaultWorldGenerator(String worldName, String id) {
@@ -51,9 +53,10 @@ public final class Main extends JavaPlugin {
         new BarrierListener();
         new SpawnProtectionListener();
 
-        new EventManager();
+        eventManager = new EventManager();
 
         getCommand("start").setExecutor(new StartCommand());
+        getCommand("event").setExecutor(new EventCommand());
 
         Bukkit.getScheduler().scheduleSyncDelayedTask(this, () -> {
             setUpWorlds();
