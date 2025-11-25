@@ -28,6 +28,13 @@ public class EventManager {
     public static final List<Material> blacklistedItems = Arrays.asList(Material.BARRIER, Material.BEDROCK, Material.COMMAND_BLOCK, Material.DEBUG_STICK, Material.STRUCTURE_BLOCK, Material.JIGSAW, Material.SCULK_SHRIEKER, Material.ENDER_DRAGON_SPAWN_EGG,
             Material.WARDEN_SPAWN_EGG, Material.WITHER_SPAWN_EGG, Material.PHANTOM_SPAWN_EGG);
 
+    // Countdown announcement times in seconds
+    private static final int COUNTDOWN_5_MINUTES = 300;
+    private static final int COUNTDOWN_1_MINUTE = 60;
+    private static final int COUNTDOWN_30_SECONDS = 30;
+    private static final int COUNTDOWN_10_SECONDS = 10;
+    private static final int COUNTDOWN_FINAL = 5;
+
     private static SecureRandom secureRandom = new SecureRandom();
 
     // Goal configuration
@@ -163,15 +170,15 @@ public class EventManager {
         remainingSeconds--;
 
         // Countdown announcements
-        if (remainingSeconds == 300) {
+        if (remainingSeconds == COUNTDOWN_5_MINUTES) {
             broadcastCountdown("§e5 Minuten");
-        } else if (remainingSeconds == 60) {
+        } else if (remainingSeconds == COUNTDOWN_1_MINUTE) {
             broadcastCountdown("§c1 Minute");
-        } else if (remainingSeconds == 30) {
+        } else if (remainingSeconds == COUNTDOWN_30_SECONDS) {
             broadcastCountdown("§c30 Sekunden");
-        } else if (remainingSeconds == 10) {
+        } else if (remainingSeconds == COUNTDOWN_10_SECONDS) {
             broadcastCountdown("§c10 Sekunden");
-        } else if (remainingSeconds <= 5 && remainingSeconds > 0) {
+        } else if (remainingSeconds <= COUNTDOWN_FINAL && remainingSeconds > 0) {
             broadcastCountdown("§c" + remainingSeconds + " Sekunde" + (remainingSeconds > 1 ? "n" : ""));
         }
 

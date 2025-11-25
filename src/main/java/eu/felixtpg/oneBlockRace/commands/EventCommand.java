@@ -19,6 +19,7 @@ import java.util.UUID;
 
 public class EventCommand implements CommandExecutor {
 
+    private static final int SETUP_TIMEOUT_SECONDS = 60;
     private static final Map<UUID, SetupSession> activeSessions = new HashMap<>();
 
     @Override
@@ -305,7 +306,7 @@ public class EventCommand implements CommandExecutor {
 
         private void scheduleTimeout() {
             cancelTimeout();
-            timeoutTask = Bukkit.getScheduler().runTaskLater(Main.getInstance(), this::timeout, 20L * 60);
+            timeoutTask = Bukkit.getScheduler().runTaskLater(Main.getInstance(), this::timeout, 20L * SETUP_TIMEOUT_SECONDS);
         }
 
         private void cancelTimeout() {
